@@ -1,0 +1,683 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Random Color Palette Generator – Free Online Tool 2026</title>
+<meta name="description" content="Generate stunning random color palettes instantly. Copy HEX codes, lock favorite colors, and create beautiful color schemes for your design projects. Free & fast.">
+<meta name="keywords" content="random color palette generator, color palette generator, hex color generator, color scheme generator, color palette tool">
+<meta name="robots" content="index, follow">
+<meta name="author" content="TrustedByRaju">
+<link rel="canonical" href="https://trustedbyraju.github.io/Age-Difference-Calculator/">
+<meta property="og:title" content="Random Color Palette Generator – Free Online Tool 2026">
+<meta property="og:description" content="Generate stunning random color palettes instantly. Copy HEX codes, lock favorite colors, and create beautiful color schemes for your design projects.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://trustedbyraju.github.io/Age-Difference-Calculator/">
+<meta property="og:image" content="https://trustedbyraju.github.io/Age-Difference-Calculator/og-image.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Random Color Palette Generator – Free Online Tool 2026">
+<meta name="twitter:description" content="Generate stunning random color palettes instantly. Free, fast, and no login required.">
+<script src="https://cdn.tailwindcss.com"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<script>
+tailwind.config = {
+  darkMode: 'class',
+  theme: {
+    extend: {
+      fontFamily: {
+        display: ['Syne', 'sans-serif'],
+        body: ['DM Sans', 'sans-serif'],
+      }
+    }
+  }
+}
+</script>
+<style>
+  :root { --transition: 0.35s cubic-bezier(0.4,0,0.2,1); }
+  body { font-family: 'DM Sans', sans-serif; }
+  h1,h2,h3,h4,h5 { font-family: 'Syne', sans-serif; }
+  .color-card { transition: transform var(--transition), box-shadow var(--transition); }
+  .color-card:hover { transform: translateY(-6px) scale(1.02); }
+  .color-swatch { transition: all var(--transition); }
+  .btn-main {
+    background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 50%, #ec4899 100%);
+    background-size: 200% 200%;
+    transition: background-position 0.4s ease, transform 0.15s ease, box-shadow 0.15s ease;
+  }
+  .btn-main:hover { background-position: right center; transform: translateY(-2px); box-shadow: 0 12px 32px rgba(99,102,241,0.4); }
+  .btn-main:active { transform: translateY(0); }
+  .copy-btn { transition: all 0.2s ease; }
+  .copy-btn:hover { transform: scale(1.1); }
+  .copy-btn:active { transform: scale(0.95); }
+  .lock-btn { transition: all 0.2s ease; }
+  .palette-grid { display: flex; gap: 0; border-radius: 20px; overflow: hidden; box-shadow: 0 20px 60px rgba(0,0,0,0.15); }
+  .palette-strip { flex: 1; min-height: 220px; display: flex; flex-direction: column; align-items: center; justify-content: flex-end; padding-bottom: 18px; cursor: pointer; position: relative; transition: flex 0.4s cubic-bezier(0.4,0,0.2,1); }
+  .palette-strip:hover { flex: 1.6; }
+  .palette-strip .strip-info { opacity: 0; transform: translateY(10px); transition: all 0.25s ease; }
+  .palette-strip:hover .strip-info { opacity: 1; transform: translateY(0); }
+  .fade-in { animation: fadeIn 0.5s ease forwards; }
+  @keyframes fadeIn { from { opacity:0; transform: translateY(16px); } to { opacity:1; transform: translateY(0); } }
+  .card-stagger:nth-child(1) { animation-delay: 0.05s; }
+  .card-stagger:nth-child(2) { animation-delay: 0.1s; }
+  .card-stagger:nth-child(3) { animation-delay: 0.15s; }
+  .card-stagger:nth-child(4) { animation-delay: 0.2s; }
+  .card-stagger:nth-child(5) { animation-delay: 0.25s; }
+  .glass { backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); }
+  .dark .glass { background: rgba(17,24,39,0.85); }
+  .light .glass { background: rgba(255,255,255,0.85); }
+  .toast { position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%) translateY(80px); opacity:0; transition: all 0.3s cubic-bezier(0.4,0,0.2,1); z-index:9999; pointer-events:none; }
+  .toast.show { transform: translateX(-50%) translateY(0); opacity:1; }
+  @media (max-width: 640px) {
+    .palette-grid { flex-direction: column; }
+    .palette-strip { min-height: 90px; flex-direction: row; justify-content: space-between; align-items: center; padding: 0 18px; }
+    .palette-strip:hover { flex: 1.4; }
+    .palette-strip .strip-info { opacity: 1; transform: translateY(0); }
+  }
+  .gradient-text {
+    background: linear-gradient(135deg, #6366f1, #8b5cf6, #ec4899);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+  .hero-bg {
+    background: radial-gradient(ellipse at 20% 50%, rgba(99,102,241,0.12) 0%, transparent 50%),
+                radial-gradient(ellipse at 80% 20%, rgba(236,72,153,0.1) 0%, transparent 50%),
+                radial-gradient(ellipse at 60% 80%, rgba(139,92,246,0.08) 0%, transparent 50%);
+  }
+  .dark .hero-bg {
+    background: radial-gradient(ellipse at 20% 50%, rgba(99,102,241,0.18) 0%, transparent 50%),
+                radial-gradient(ellipse at 80% 20%, rgba(236,72,153,0.14) 0%, transparent 50%),
+                radial-gradient(ellipse at 60% 80%, rgba(139,92,246,0.12) 0%, transparent 50%);
+  }
+  .section-card { border: 1px solid rgba(99,102,241,0.1); }
+  .dark .section-card { border-color: rgba(99,102,241,0.2); }
+  input[type=range] { accent-color: #6366f1; }
+  .locked-badge { background: rgba(0,0,0,0.45); backdrop-filter: blur(4px); }
+</style>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "SoftwareApplication",
+  "name": "Random Color Palette Generator",
+  "applicationCategory": "DesignApplication",
+  "operatingSystem": "Any",
+  "browserRequirements": "Requires JavaScript",
+  "offers": {
+    "@type": "Offer",
+    "price": "0",
+    "priceCurrency": "USD"
+  },
+  "description": "A free online random color palette generator that creates beautiful 5-color palettes with HEX codes. Features include copy to clipboard, lock colors, dark mode, and mobile-first design.",
+  "url": "https://trustedbyraju.github.io/Age-Difference-Calculator/",
+  "author": {
+    "@type": "Organization",
+    "name": "TrustedByRaju",
+    "url": "https://trustedbyraju.github.io"
+  },
+  "datePublished": "2026-01-01",
+  "screenshot": "https://trustedbyraju.github.io/Age-Difference-Calculator/og-image.png",
+  "featureList": ["Random color palette generation", "HEX code display", "Copy to clipboard", "Lock/unlock colors", "Dark mode", "Mobile responsive"]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebSite",
+  "name": "Random Color Palette Generator",
+  "url": "https://trustedbyraju.github.io/Age-Difference-Calculator/",
+  "description": "Free online random color palette generator tool for designers and developers.",
+  "publisher": {
+    "@type": "Organization",
+    "name": "TrustedByRaju"
+  },
+  "potentialAction": {
+    "@type": "SearchAction",
+    "target": "https://trustedbyraju.github.io/Age-Difference-Calculator/?q={search_term_string}",
+    "query-input": "required name=search_term_string"
+  }
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "What is a random color palette generator?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "A random color palette generator is an online tool that automatically creates a set of harmonious or random colors for use in design projects, branding, websites, and artwork. It generates HEX color codes that you can copy and use directly in design software or code."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "How do I use this color palette generator?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Simply click the 'Generate Palette' button to create a new set of 5 random colors. You can click the copy icon on any color to copy its HEX code, lock colors you want to keep by clicking the lock icon, and use 'Copy Full Palette' to copy all HEX codes at once."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Is this color palette generator free to use?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Yes, this random color palette generator is completely free to use with no registration, no login, and no hidden costs. You can generate unlimited palettes at no charge."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Can I copy the colors from the palette?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Absolutely. Each color has a copy button that instantly copies the HEX code to your clipboard. You can also use the 'Copy Full Palette' button to copy all 5 HEX codes at once, separated by commas."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Why are color palettes important in design?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Color palettes establish visual consistency, evoke emotions, and reinforce brand identity. A well-chosen palette makes designs more professional, accessible, and memorable. Designers use color palettes to ensure all elements of a project — from websites to logos to marketing materials — maintain a cohesive look and feel."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Can I lock specific colors and regenerate the rest?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Yes! Click the lock icon on any color card to lock that color in place. When you generate a new palette, locked colors stay unchanged while the unlocked ones are regenerated. This helps you build palettes around a specific brand color."
+      }
+    }
+  ]
+}
+</script>
+</head>
+
+<body class="bg-gray-50 dark:bg-gray-950 text-gray-900 dark:text-gray-100 transition-colors duration-300 font-body">
+
+<!-- Toast Notification -->
+<div id="toast" class="toast" role="alert" aria-live="polite">
+  <div class="bg-gray-900 dark:bg-gray-100 text-white dark:text-gray-900 text-sm font-medium px-5 py-3 rounded-full shadow-2xl flex items-center gap-2">
+    <svg class="w-4 h-4 text-green-400 dark:text-green-600" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg>
+    <span id="toastMsg">Copied!</span>
+  </div>
+</div>
+
+<!-- HEADER -->
+<header class="sticky top-0 z-50 glass border-b border-gray-200/60 dark:border-gray-800/60" style="background:rgba(249,250,251,0.88);" id="siteHeader">
+  <div class="max-w-6xl mx-auto px-4 sm:px-6 py-3 flex items-center justify-between">
+    <div class="flex items-center gap-2.5">
+      <div class="w-8 h-8 rounded-xl bg-gradient-to-br from-indigo-500 to-pink-500 flex items-center justify-center shadow-md shadow-indigo-200 dark:shadow-indigo-900/30">
+        <svg class="w-4 h-4 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 21a4 4 0 01-4-4V5a2 2 0 012-2h4a2 2 0 012 2v12a4 4 0 01-4 4zm0 0h12a2 2 0 002-2v-4a2 2 0 00-2-2h-2.343M11 7.343l1.657-1.657a2 2 0 012.828 0l2.829 2.829a2 2 0 010 2.828l-8.486 8.485M7 17h.01"/></svg>
+      </div>
+      <span class="font-display font-700 text-base sm:text-lg tracking-tight gradient-text">PaletteGen</span>
+    </div>
+    <nav class="hidden md:flex items-center gap-6 text-sm font-medium text-gray-600 dark:text-gray-400">
+      <a href="#tool" class="hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors">Tool</a>
+      <a href="#how-to-use" class="hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors">How To Use</a>
+      <a href="#faq" class="hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors">FAQ</a>
+    </nav>
+    <button id="themeToggle" aria-label="Toggle dark mode" class="w-9 h-9 rounded-xl bg-gray-100 dark:bg-gray-800 flex items-center justify-center hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors">
+      <svg id="moonIcon" class="w-4.5 h-4.5 text-gray-600 dark:hidden" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"/></svg>
+      <svg id="sunIcon" class="w-4.5 h-4.5 text-yellow-400 hidden dark:block" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"/></svg>
+    </button>
+  </div>
+</header>
+
+<!-- HERO -->
+<section class="hero-bg pt-14 pb-10 sm:pt-20 sm:pb-14">
+  <div class="max-w-4xl mx-auto px-4 sm:px-6 text-center">
+    <div class="inline-flex items-center gap-2 bg-indigo-50 dark:bg-indigo-900/30 border border-indigo-200 dark:border-indigo-700/50 text-indigo-700 dark:text-indigo-300 text-xs font-medium px-3.5 py-1.5 rounded-full mb-5">
+      <span class="w-1.5 h-1.5 bg-indigo-500 rounded-full animate-pulse"></span>
+      Free · No Login · 2026 Edition
+    </div>
+    <h1 class="font-display font-800 text-3xl sm:text-5xl md:text-6xl leading-tight tracking-tight mb-4">
+      Random <span class="gradient-text">Color Palette</span><br>Generator
+    </h1>
+    <p class="text-gray-500 dark:text-gray-400 text-base sm:text-lg max-w-xl mx-auto mb-8 leading-relaxed">
+      Instantly generate beautiful 5-color palettes for your next design project. Copy HEX codes, lock favorites, and export with one click.
+    </p>
+    <a href="#tool" class="btn-main inline-flex items-center gap-2.5 text-white font-display font-600 text-sm sm:text-base px-7 py-3.5 rounded-2xl shadow-lg shadow-indigo-200 dark:shadow-indigo-900/30">
+      <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
+      Generate Palette Now
+    </a>
+  </div>
+</section>
+
+<!-- TOOL SECTION -->
+<section id="tool" class="max-w-5xl mx-auto px-4 sm:px-6 py-10 sm:py-14">
+
+  <!-- Palette Display -->
+  <div id="paletteGrid" class="palette-grid mb-6" role="list" aria-label="Color palette">
+    <!-- JS rendered -->
+  </div>
+
+  <!-- Color Cards (mobile/detailed view) -->
+  <div id="colorCards" class="grid grid-cols-2 sm:grid-cols-5 gap-3 mb-8">
+    <!-- JS rendered -->
+  </div>
+
+  <!-- Actions -->
+  <div class="flex flex-col sm:flex-row items-center justify-center gap-3">
+    <button id="generateBtn" aria-label="Generate new random color palette" class="btn-main w-full sm:w-auto inline-flex items-center justify-center gap-2.5 text-white font-display font-600 text-sm px-8 py-3.5 rounded-2xl shadow-lg shadow-indigo-200 dark:shadow-indigo-900/30">
+      <svg class="w-4 h-4" id="generateIcon" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"/></svg>
+      Generate Palette
+    </button>
+    <button id="copyAllBtn" aria-label="Copy all HEX color codes" class="w-full sm:w-auto inline-flex items-center justify-center gap-2.5 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 text-gray-700 dark:text-gray-300 font-display font-600 text-sm px-8 py-3.5 rounded-2xl hover:bg-gray-50 dark:hover:bg-gray-750 transition-all shadow-sm hover:shadow-md">
+      <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"/></svg>
+      Copy Full Palette
+    </button>
+  </div>
+
+  <p class="text-center text-xs text-gray-400 dark:text-gray-600 mt-4">Press <kbd class="bg-gray-100 dark:bg-gray-800 px-1.5 py-0.5 rounded text-gray-500 dark:text-gray-400 text-xs font-mono">Space</kbd> to generate a new palette</p>
+</section>
+
+<!-- STATS BAR -->
+<div class="border-y border-gray-100 dark:border-gray-800 bg-white dark:bg-gray-900 py-7">
+  <div class="max-w-5xl mx-auto px-4 sm:px-6">
+    <div class="grid grid-cols-3 divide-x divide-gray-100 dark:divide-gray-800 text-center">
+      <div class="px-4">
+        <div class="font-display font-800 text-2xl sm:text-3xl gradient-text">∞</div>
+        <div class="text-xs sm:text-sm text-gray-500 dark:text-gray-400 mt-0.5">Palettes</div>
+      </div>
+      <div class="px-4">
+        <div class="font-display font-800 text-2xl sm:text-3xl gradient-text">16M+</div>
+        <div class="text-xs sm:text-sm text-gray-500 dark:text-gray-400 mt-0.5">Color Combos</div>
+      </div>
+      <div class="px-4">
+        <div class="font-display font-800 text-2xl sm:text-3xl gradient-text">100%</div>
+        <div class="text-xs sm:text-sm text-gray-500 dark:text-gray-400 mt-0.5">Free Forever</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- HOW TO USE -->
+<section id="how-to-use" class="max-w-5xl mx-auto px-4 sm:px-6 py-14 sm:py-20">
+  <div class="text-center mb-10">
+    <h2 class="font-display font-800 text-2xl sm:text-4xl tracking-tight mb-3">How to Use the <span class="gradient-text">Palette Generator</span></h2>
+    <p class="text-gray-500 dark:text-gray-400 max-w-xl mx-auto text-sm sm:text-base">Generate professional color palettes in seconds — no design experience needed.</p>
+  </div>
+  <div class="grid sm:grid-cols-3 gap-5">
+    <div class="section-card bg-white dark:bg-gray-900 rounded-2xl p-6 shadow-sm hover:shadow-md transition-shadow">
+      <div class="w-11 h-11 bg-indigo-50 dark:bg-indigo-900/30 rounded-xl flex items-center justify-center mb-4">
+        <svg class="w-5 h-5 text-indigo-600 dark:text-indigo-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
+      </div>
+      <h3 class="font-display font-700 text-base mb-2">1. Generate</h3>
+      <p class="text-sm text-gray-500 dark:text-gray-400 leading-relaxed">Click <strong class="text-gray-700 dark:text-gray-300">Generate Palette</strong> or press <kbd class="bg-gray-100 dark:bg-gray-800 px-1 rounded text-xs">Space</kbd> to create 5 random colors instantly.</p>
+    </div>
+    <div class="section-card bg-white dark:bg-gray-900 rounded-2xl p-6 shadow-sm hover:shadow-md transition-shadow">
+      <div class="w-11 h-11 bg-purple-50 dark:bg-purple-900/30 rounded-xl flex items-center justify-center mb-4">
+        <svg class="w-5 h-5 text-purple-600 dark:text-purple-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/></svg>
+      </div>
+      <h3 class="font-display font-700 text-base mb-2">2. Lock Favorites</h3>
+      <p class="text-sm text-gray-500 dark:text-gray-400 leading-relaxed">Click the <strong class="text-gray-700 dark:text-gray-300">lock icon</strong> on any color to keep it. Only unlocked colors change on next generation.</p>
+    </div>
+    <div class="section-card bg-white dark:bg-gray-900 rounded-2xl p-6 shadow-sm hover:shadow-md transition-shadow">
+      <div class="w-11 h-11 bg-pink-50 dark:bg-pink-900/30 rounded-xl flex items-center justify-center mb-4">
+        <svg class="w-5 h-5 text-pink-600 dark:text-pink-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"/></svg>
+      </div>
+      <h3 class="font-display font-700 text-base mb-2">3. Copy & Use</h3>
+      <p class="text-sm text-gray-500 dark:text-gray-400 leading-relaxed">Click any color's <strong class="text-gray-700 dark:text-gray-300">copy button</strong> to grab its HEX code, or use <strong class="text-gray-700 dark:text-gray-300">Copy Full Palette</strong> for all 5 at once.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT TOOL -->
+<section class="bg-white dark:bg-gray-900 border-y border-gray-100 dark:border-gray-800">
+  <div class="max-w-5xl mx-auto px-4 sm:px-6 py-14 sm:py-20">
+    <div class="grid md:grid-cols-2 gap-10 items-center">
+      <div>
+        <div class="inline-flex items-center gap-2 text-xs font-medium text-indigo-600 dark:text-indigo-400 bg-indigo-50 dark:bg-indigo-900/30 px-3 py-1.5 rounded-full mb-4">About This Tool</div>
+        <h2 class="font-display font-800 text-2xl sm:text-3xl tracking-tight mb-4">Built by Designers, <span class="gradient-text">for Designers</span></h2>
+        <p class="text-gray-500 dark:text-gray-400 text-sm sm:text-base leading-relaxed mb-4">
+          This random color palette generator was built to solve a real problem: finding the right color combinations quickly without opening expensive design software. Whether you're a UI designer, developer, or creator, you deserve a tool that's fast, beautiful, and accessible.
+        </p>
+        <p class="text-gray-500 dark:text-gray-400 text-sm sm:text-base leading-relaxed">
+          Every palette is generated with full randomness across the HEX spectrum — giving you millions of possible color scheme combinations at your fingertips.
+        </p>
+      </div>
+      <div class="grid grid-cols-2 gap-3">
+        <div class="section-card bg-gray-50 dark:bg-gray-800/60 rounded-2xl p-4 hover:shadow-md transition-shadow">
+          <div class="text-2xl mb-2">🎨</div>
+          <h4 class="font-display font-700 text-sm mb-1">Color Theory</h4>
+          <p class="text-xs text-gray-500 dark:text-gray-400">Generate palettes informed by 16+ million possible HEX combinations</p>
+        </div>
+        <div class="section-card bg-gray-50 dark:bg-gray-800/60 rounded-2xl p-4 hover:shadow-md transition-shadow">
+          <div class="text-2xl mb-2">⚡</div>
+          <h4 class="font-display font-700 text-sm mb-1">Instant Generation</h4>
+          <p class="text-xs text-gray-500 dark:text-gray-400">Sub-millisecond palette creation, no server round-trips needed</p>
+        </div>
+        <div class="section-card bg-gray-50 dark:bg-gray-800/60 rounded-2xl p-4 hover:shadow-md transition-shadow">
+          <div class="text-2xl mb-2">🔒</div>
+          <h4 class="font-display font-700 text-sm mb-1">Privacy First</h4>
+          <p class="text-xs text-gray-500 dark:text-gray-400">Zero data collection. Everything runs locally in your browser</p>
+        </div>
+        <div class="section-card bg-gray-50 dark:bg-gray-800/60 rounded-2xl p-4 hover:shadow-md transition-shadow">
+          <div class="text-2xl mb-2">📱</div>
+          <h4 class="font-display font-700 text-sm mb-1">Mobile First</h4>
+          <p class="text-xs text-gray-500 dark:text-gray-400">Designed for touch screens and small displays from the ground up</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- BENEFITS SECTION -->
+<section class="max-w-5xl mx-auto px-4 sm:px-6 py-14 sm:py-20">
+  <div class="text-center mb-10">
+    <h2 class="font-display font-800 text-2xl sm:text-4xl tracking-tight mb-3">Why Color Palettes <span class="gradient-text">Matter in Design</span></h2>
+    <p class="text-gray-500 dark:text-gray-400 max-w-xl mx-auto text-sm sm:text-base">Color is the first thing users notice. Get it right with a thoughtfully generated palette.</p>
+  </div>
+  <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
+    <div class="section-card bg-white dark:bg-gray-900 rounded-2xl p-6 shadow-sm">
+      <h3 class="font-display font-700 text-base mb-2 flex items-center gap-2"><span class="text-xl">🧠</span> Brand Recognition</h3>
+      <p class="text-sm text-gray-500 dark:text-gray-400 leading-relaxed">Consistent color use increases brand recognition by up to 80%. A solid color palette is the foundation of any strong brand identity.</p>
+    </div>
+    <div class="section-card bg-white dark:bg-gray-900 rounded-2xl p-6 shadow-sm">
+      <h3 class="font-display font-700 text-base mb-2 flex items-center gap-2"><span class="text-xl">💡</span> Evoke Emotions</h3>
+      <p class="text-sm text-gray-500 dark:text-gray-400 leading-relaxed">Colors trigger psychological responses. Blues convey trust, reds signal urgency, greens suggest growth — the right palette tells your story.</p>
+    </div>
+    <div class="section-card bg-white dark:bg-gray-900 rounded-2xl p-6 shadow-sm">
+      <h3 class="font-display font-700 text-base mb-2 flex items-center gap-2"><span class="text-xl">✅</span> Visual Consistency</h3>
+      <p class="text-sm text-gray-500 dark:text-gray-400 leading-relaxed">A defined color scheme ties together every element of your design — from hero banners to buttons — creating a cohesive user experience.</p>
+    </div>
+    <div class="section-card bg-white dark:bg-gray-900 rounded-2xl p-6 shadow-sm">
+      <h3 class="font-display font-700 text-base mb-2 flex items-center gap-2"><span class="text-xl">♿</span> Accessibility</h3>
+      <p class="text-sm text-gray-500 dark:text-gray-400 leading-relaxed">Choosing the right color contrast ensures your designs are readable and inclusive for users with visual impairments (WCAG compliance).</p>
+    </div>
+    <div class="section-card bg-white dark:bg-gray-900 rounded-2xl p-6 shadow-sm">
+      <h3 class="font-display font-700 text-base mb-2 flex items-center gap-2"><span class="text-xl">🚀</span> Faster Workflow</h3>
+      <p class="text-sm text-gray-500 dark:text-gray-400 leading-relaxed">Having a pre-defined palette eliminates decision fatigue and speeds up your design workflow — no more agonizing over which shade of blue to use.</p>
+    </div>
+    <div class="section-card bg-white dark:bg-gray-900 rounded-2xl p-6 shadow-sm">
+      <h3 class="font-display font-700 text-base mb-2 flex items-center gap-2"><span class="text-xl">🎯</span> Conversion Impact</h3>
+      <p class="text-sm text-gray-500 dark:text-gray-400 leading-relaxed">The right call-to-action color can boost conversions significantly. Color psychology plays a direct role in how users interact with your product.</p>
+    </div>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section id="faq" class="bg-white dark:bg-gray-900 border-y border-gray-100 dark:border-gray-800">
+  <div class="max-w-3xl mx-auto px-4 sm:px-6 py-14 sm:py-20">
+    <div class="text-center mb-10">
+      <h2 class="font-display font-800 text-2xl sm:text-4xl tracking-tight mb-3">Frequently Asked <span class="gradient-text">Questions</span></h2>
+      <p class="text-gray-500 dark:text-gray-400 text-sm sm:text-base">Everything you need to know about our random color palette generator.</p>
+    </div>
+    <div class="space-y-3" id="faqAccordion">
+      <div class="faq-item section-card bg-gray-50 dark:bg-gray-800/60 rounded-2xl overflow-hidden">
+        <button class="faq-btn w-full flex items-center justify-between px-5 py-4 text-left font-display font-600 text-sm sm:text-base" aria-expanded="false">
+          <span>What is a random color palette generator?</span>
+          <svg class="faq-icon w-4 h-4 text-gray-400 flex-shrink-0 transition-transform duration-300" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+        </button>
+        <div class="faq-answer max-h-0 overflow-hidden transition-all duration-300 ease-in-out">
+          <p class="px-5 pb-4 text-sm text-gray-500 dark:text-gray-400 leading-relaxed">A random color palette generator is an online tool that automatically creates a set of colors for use in design projects, branding, websites, and artwork. It generates HEX color codes that you can instantly copy and use in Figma, Adobe XD, CSS, or any design tool.</p>
+        </div>
+      </div>
+      <div class="faq-item section-card bg-gray-50 dark:bg-gray-800/60 rounded-2xl overflow-hidden">
+        <button class="faq-btn w-full flex items-center justify-between px-5 py-4 text-left font-display font-600 text-sm sm:text-base" aria-expanded="false">
+          <span>How do I use this color palette generator?</span>
+          <svg class="faq-icon w-4 h-4 text-gray-400 flex-shrink-0 transition-transform duration-300" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+        </button>
+        <div class="faq-answer max-h-0 overflow-hidden transition-all duration-300 ease-in-out">
+          <p class="px-5 pb-4 text-sm text-gray-500 dark:text-gray-400 leading-relaxed">Click "Generate Palette" or press Spacebar to create 5 random colors. Click any color's copy icon to grab its HEX code. Lock colors you want to keep by clicking the lock icon, then generate again to refresh only the unlocked ones. Use "Copy Full Palette" to grab all 5 HEX codes at once.</p>
+        </div>
+      </div>
+      <div class="faq-item section-card bg-gray-50 dark:bg-gray-800/60 rounded-2xl overflow-hidden">
+        <button class="faq-btn w-full flex items-center justify-between px-5 py-4 text-left font-display font-600 text-sm sm:text-base" aria-expanded="false">
+          <span>Is this color palette generator free?</span>
+          <svg class="faq-icon w-4 h-4 text-gray-400 flex-shrink-0 transition-transform duration-300" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+        </button>
+        <div class="faq-answer max-h-0 overflow-hidden transition-all duration-300 ease-in-out">
+          <p class="px-5 pb-4 text-sm text-gray-500 dark:text-gray-400 leading-relaxed">Yes, completely free! No registration, no subscription, no hidden fees. You can generate unlimited color palettes at no cost, forever. This tool is built to be accessible to everyone — from students to professional designers.</p>
+        </div>
+      </div>
+      <div class="faq-item section-card bg-gray-50 dark:bg-gray-800/60 rounded-2xl overflow-hidden">
+        <button class="faq-btn w-full flex items-center justify-between px-5 py-4 text-left font-display font-600 text-sm sm:text-base" aria-expanded="false">
+          <span>Can I copy the HEX color codes?</span>
+          <svg class="faq-icon w-4 h-4 text-gray-400 flex-shrink-0 transition-transform duration-300" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+        </button>
+        <div class="faq-answer max-h-0 overflow-hidden transition-all duration-300 ease-in-out">
+          <p class="px-5 pb-4 text-sm text-gray-500 dark:text-gray-400 leading-relaxed">Absolutely. Each color has a dedicated copy button that instantly copies its HEX code to your clipboard. You can also click "Copy Full Palette" to copy all 5 HEX codes at once, comma-separated — perfect for dropping into design docs or sharing with teammates.</p>
+        </div>
+      </div>
+      <div class="faq-item section-card bg-gray-50 dark:bg-gray-800/60 rounded-2xl overflow-hidden">
+        <button class="faq-btn w-full flex items-center justify-between px-5 py-4 text-left font-display font-600 text-sm sm:text-base" aria-expanded="false">
+          <span>Why are color palettes important in design?</span>
+          <svg class="faq-icon w-4 h-4 text-gray-400 flex-shrink-0 transition-transform duration-300" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+        </button>
+        <div class="faq-answer max-h-0 overflow-hidden transition-all duration-300 ease-in-out">
+          <p class="px-5 pb-4 text-sm text-gray-500 dark:text-gray-400 leading-relaxed">Color palettes establish visual identity, evoke emotions, and ensure consistency across all design touchpoints. A cohesive palette makes your work look professional, builds brand trust, and improves user experience — from websites to marketing materials to app interfaces.</p>
+        </div>
+      </div>
+      <div class="faq-item section-card bg-gray-50 dark:bg-gray-800/60 rounded-2xl overflow-hidden">
+        <button class="faq-btn w-full flex items-center justify-between px-5 py-4 text-left font-display font-600 text-sm sm:text-base" aria-expanded="false">
+          <span>Can I lock specific colors and regenerate the rest?</span>
+          <svg class="faq-icon w-4 h-4 text-gray-400 flex-shrink-0 transition-transform duration-300" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+        </button>
+        <div class="faq-answer max-h-0 overflow-hidden transition-all duration-300 ease-in-out">
+          <p class="px-5 pb-4 text-sm text-gray-500 dark:text-gray-400 leading-relaxed">Yes! This is one of the most powerful features. Click the lock icon on any color to freeze it. When you regenerate, only the unlocked colors change. This is great for building a palette around your brand's primary color or any color you already love.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- AUTHOR / BRAND -->
+<section class="max-w-5xl mx-auto px-4 sm:px-6 py-14 sm:py-20">
+  <div class="section-card bg-gradient-to-br from-indigo-50 to-purple-50 dark:from-indigo-900/20 dark:to-purple-900/20 rounded-3xl p-8 sm:p-10 flex flex-col sm:flex-row items-center gap-6 text-center sm:text-left">
+    <div class="w-16 h-16 rounded-2xl bg-gradient-to-br from-indigo-500 to-pink-500 flex items-center justify-center shadow-lg shadow-indigo-200 dark:shadow-indigo-900/30 flex-shrink-0">
+      <svg class="w-7 h-7 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 21a4 4 0 01-4-4V5a2 2 0 012-2h4a2 2 0 012 2v12a4 4 0 01-4 4zm0 0h12a2 2 0 002-2v-4a2 2 0 00-2-2h-2.343M11 7.343l1.657-1.657a2 2 0 012.828 0l2.829 2.829a2 2 0 010 2.828l-8.486 8.485M7 17h.01"/></svg>
+    </div>
+    <div>
+      <h2 class="font-display font-800 text-xl sm:text-2xl mb-2">Built by <span class="gradient-text">TrustedByRaju</span></h2>
+      <p class="text-sm text-gray-500 dark:text-gray-400 max-w-lg leading-relaxed">We build free, high-quality tools for designers and developers. Our tools are privacy-first — no tracking, no cookies, no data collection. Everything runs in your browser.</p>
+      <div class="flex flex-wrap gap-2 mt-4 justify-center sm:justify-start">
+        <span class="text-xs bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 text-gray-600 dark:text-gray-400 px-3 py-1 rounded-full">🔒 No data tracking</span>
+        <span class="text-xs bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 text-gray-600 dark:text-gray-400 px-3 py-1 rounded-full">✅ WCAG Accessible</span>
+        <span class="text-xs bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 text-gray-600 dark:text-gray-400 px-3 py-1 rounded-full">⚡ Zero server calls</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="border-t border-gray-100 dark:border-gray-800 bg-white dark:bg-gray-900">
+  <div class="max-w-5xl mx-auto px-4 sm:px-6 py-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-sm text-gray-400 dark:text-gray-600">
+    <div class="flex items-center gap-2">
+      <div class="w-6 h-6 rounded-lg bg-gradient-to-br from-indigo-500 to-pink-500 flex items-center justify-center">
+        <svg class="w-3 h-3 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 21a4 4 0 01-4-4V5a2 2 0 012-2h4a2 2 0 012 2v12a4 4 0 01-4 4zm0 0h12a2 2 0 002-2v-4a2 2 0 00-2-2h-2.343M11 7.343l1.657-1.657a2 2 0 012.828 0l2.829 2.829a2 2 0 010 2.828l-8.486 8.485M7 17h.01"/></svg>
+      </div>
+      <span>© 2026 PaletteGen by TrustedByRaju</span>
+    </div>
+    <p class="text-center">Free Random Color Palette Generator · No login required · No data stored</p>
+  </div>
+</footer>
+
+<script>
+(function() {
+  'use strict';
+
+  // State
+  let palette = [{hex:'',locked:false},{hex:'',locked:false},{hex:'',locked:false},{hex:'',locked:false},{hex:'',locked:false}];
+
+  // Utils
+  function randHex() {
+    return '#' + Math.floor(Math.random()*16777215).toString(16).padStart(6,'0').toUpperCase();
+  }
+
+  function getLuminance(hex) {
+    const r = parseInt(hex.slice(1,3),16)/255;
+    const g = parseInt(hex.slice(3,5),16)/255;
+    const b = parseInt(hex.slice(5,7),16)/255;
+    const toLinear = c => c <= 0.03928 ? c/12.92 : Math.pow((c+0.055)/1.055,2.4);
+    return 0.2126*toLinear(r) + 0.7152*toLinear(g) + 0.0722*toLinear(b);
+  }
+
+  function getTextColor(hex) {
+    return getLuminance(hex) > 0.35 ? '#1a1a2e' : '#ffffff';
+  }
+
+  // Generate
+  function generate() {
+    palette.forEach((c, i) => { if (!c.locked) palette[i].hex = randHex(); });
+    renderAll();
+  }
+
+  // Render palette strips
+  function renderStrips() {
+    const grid = document.getElementById('paletteGrid');
+    grid.innerHTML = '';
+    palette.forEach((c, i) => {
+      const textCol = getTextColor(c.hex);
+      const strip = document.createElement('div');
+      strip.className = 'palette-strip fade-in card-stagger';
+      strip.style.background = c.hex;
+      strip.setAttribute('role','listitem');
+      strip.setAttribute('aria-label', `Color ${i+1}: ${c.hex}`);
+      strip.innerHTML = `
+        <div class="strip-info flex flex-col items-center gap-1.5">
+          <span class="text-xs font-mono font-600 px-2.5 py-1 rounded-lg" style="background:rgba(0,0,0,0.25);color:${textCol};backdrop-filter:blur(4px)">${c.hex}</span>
+          <button class="copy-btn w-7 h-7 rounded-lg flex items-center justify-center" style="background:rgba(0,0,0,0.25);color:${textCol}" aria-label="Copy ${c.hex}" data-hex="${c.hex}" onclick="copyColor('${c.hex}',event)">
+            <svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"/></svg>
+          </button>
+        </div>
+      `;
+      grid.appendChild(strip);
+    });
+  }
+
+  // Render color cards
+  function renderCards() {
+    const cards = document.getElementById('colorCards');
+    cards.innerHTML = '';
+    palette.forEach((c, i) => {
+      const textCol = getTextColor(c.hex);
+      const card = document.createElement('div');
+      card.className = 'color-card section-card bg-white dark:bg-gray-900 rounded-2xl overflow-hidden shadow-sm fade-in card-stagger';
+      card.innerHTML = `
+        <div class="h-24 sm:h-28 relative flex items-start justify-end p-2.5 cursor-pointer group" style="background:${c.hex}" aria-label="Color ${c.hex}" onclick="copyColor('${c.hex}',event)">
+          ${c.locked ? `<span class="locked-badge text-white text-xs px-2 py-0.5 rounded-lg font-medium">🔒</span>` : ''}
+          <div class="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-200">
+            <span class="text-xs font-medium px-2.5 py-1 rounded-lg" style="background:rgba(0,0,0,0.35);color:#fff">Click to copy</span>
+          </div>
+        </div>
+        <div class="p-3">
+          <div class="flex items-center justify-between mb-2">
+            <span class="font-mono text-xs font-600 text-gray-700 dark:text-gray-300">${c.hex}</span>
+          </div>
+          <div class="flex gap-1.5">
+            <button class="copy-btn flex-1 text-xs bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-400 py-1.5 rounded-lg hover:bg-indigo-100 dark:hover:bg-indigo-900/40 hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors font-medium" aria-label="Copy ${c.hex}" onclick="copyColor('${c.hex}',event)">Copy</button>
+            <button class="lock-btn w-8 h-7 flex items-center justify-center rounded-lg transition-colors ${c.locked ? 'bg-indigo-100 dark:bg-indigo-900/40 text-indigo-600 dark:text-indigo-400' : 'bg-gray-100 dark:bg-gray-800 text-gray-400'} hover:bg-indigo-100 dark:hover:bg-indigo-900/40" aria-label="${c.locked ? 'Unlock' : 'Lock'} color ${c.hex}" onclick="toggleLock(${i},event)">
+              ${c.locked
+                ? `<svg class="w-3.5 h-3.5" fill="currentColor" viewBox="0 0 24 24"><path fill-rule="evenodd" d="M12 1a5 5 0 00-5 5v3H6a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V11a2 2 0 00-2-2h-1V6a5 5 0 00-5-5zm3 8V6a3 3 0 10-6 0v3h6z" clip-rule="evenodd"/></svg>`
+                : `<svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 11V7a4 4 0 118 0m-4 8v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2z"/></svg>`
+              }
+            </button>
+          </div>
+        </div>
+      `;
+      cards.appendChild(card);
+    });
+  }
+
+  function renderAll() {
+    renderStrips();
+    renderCards();
+  }
+
+  // Expose globally for inline handlers
+  window.copyColor = function(hex, e) {
+    e && e.stopPropagation();
+    navigator.clipboard.writeText(hex).then(() => showToast('Copied ' + hex + '!')).catch(() => {
+      const ta = document.createElement('textarea');
+      ta.value = hex; document.body.appendChild(ta); ta.select(); document.execCommand('copy'); document.body.removeChild(ta);
+      showToast('Copied ' + hex + '!');
+    });
+  };
+
+  window.toggleLock = function(i, e) {
+    e && e.stopPropagation();
+    palette[i].locked = !palette[i].locked;
+    renderCards();
+    renderStrips();
+  };
+
+  // Toast
+  function showToast(msg) {
+    const t = document.getElementById('toast');
+    const m = document.getElementById('toastMsg');
+    m.textContent = msg;
+    t.classList.add('show');
+    setTimeout(() => t.classList.remove('show'), 2200);
+  }
+
+  // Generate button
+  document.getElementById('generateBtn').addEventListener('click', function() {
+    this.querySelector('#generateIcon')?.classList.add('animate-spin');
+    setTimeout(() => document.getElementById('generateIcon')?.classList.remove('animate-spin'), 400);
+    generate();
+  });
+
+  // Copy all
+  document.getElementById('copyAllBtn').addEventListener('click', function() {
+    const all = palette.map(c => c.hex).join(', ');
+    navigator.clipboard.writeText(all).then(() => showToast('All 5 colors copied!')).catch(() => showToast('Copied!'));
+  });
+
+  // Spacebar shortcut
+  document.addEventListener('keydown', function(e) {
+    if (e.code === 'Space' && e.target === document.body) { e.preventDefault(); generate(); }
+  });
+
+  // Dark mode
+  const themeBtn = document.getElementById('themeToggle');
+  const html = document.documentElement;
+  const header = document.getElementById('siteHeader');
+
+  function applyTheme(dark) {
+    if (dark) {
+      html.classList.add('dark');
+      header.style.background = 'rgba(3,7,18,0.88)';
+    } else {
+      html.classList.remove('dark');
+      header.style.background = 'rgba(249,250,251,0.88)';
+    }
+    localStorage.setItem('theme', dark ? 'dark' : 'light');
+  }
+
+  themeBtn.addEventListener('click', () => applyTheme(!html.classList.contains('dark')));
+
+  // Init theme
+  const saved = localStorage.getItem('theme');
+  if (saved === 'dark' || (!saved && window.matchMedia('(prefers-color-scheme: dark)').matches)) applyTheme(true);
+
+  // FAQ accordion
+  document.querySelectorAll('.faq-btn').forEach(btn => {
+    btn.addEventListener('click', function() {
+      const answer = this.nextElementSibling;
+      const icon = this.querySelector('.faq-icon');
+      const isOpen = this.getAttribute('aria-expanded') === 'true';
+      document.querySelectorAll('.faq-btn').forEach(b => {
+        b.setAttribute('aria-expanded','false');
+        b.nextElementSibling.style.maxHeight = '0px';
+        b.querySelector('.faq-icon').style.transform = 'rotate(0deg)';
+      });
+      if (!isOpen) {
+        this.setAttribute('aria-expanded','true');
+        answer.style.maxHeight = answer.scrollHeight + 'px';
+        icon.style.transform = 'rotate(180deg)';
+      }
+    });
+  });
+
+  // Init
+  generate();
+})();
+</script>
+</body>
+</html>
